@@ -1,8 +1,8 @@
 package coffee.michel.adventofcode
 
-import java.io.FileReader
 import java.io.InputStreamReader
 import java.util.*
+import kotlin.collections.HashSet
 
 class DayOne {
 
@@ -10,16 +10,18 @@ class DayOne {
         private const val TARGET_SUM = 2020
     }
 
-    fun solve(input: List<Int>): Int {
-        for(number in input) {
-            val possibleResult = TARGET_SUM - number
-            if(input.contains(possibleResult))
-                return number * possibleResult
+    fun solve(input: Collection<Int>): Int {
+        val computed = HashSet<Int>()
+        for (number in input) {
+            if (computed.contains(number))
+                return (TARGET_SUM - number) * number
+            else
+                computed.add(TARGET_SUM - number)
         }
         return -1
     }
 
-    fun solve_partTwo(input: List<Int>): Int {
+    fun solve_partTwo(input: Collection<Int>): Int {
         for((i, firstNum) in input.withIndex()) {
             for((j, secondNum) in input.withIndex()) {
                 if (i == j) continue
@@ -38,14 +40,21 @@ class DayOne {
 
 }
 
+fun timed(solve: () -> Int, eval: (Long, Int) -> Unit) {
+    val start = System.nanoTime()
+    val res = solve()
+    val time = System.nanoTime() - start
+    eval(time, res)
+}
+
 fun main() {
     val inp = DayOne::class.java.classLoader.getResourceAsStream("DayOne.input.txt")
-    val inputs = LinkedList<Int>()
+    val inputs = HashSet<Int>()
 
     val isr = InputStreamReader(inp)
     isr.forEachLine { line -> inputs.add(Integer.valueOf(line)) }
     isr.close()
 
-    println("Solution Part One: " + DayOne().solve(inputs))
-    println("Solution Part Two: " + DayOne().solve_partTwo(inputs))
+    timed({DayOne().solve(inputs)}, { time, res -> println("Solution Part One, List ($time ns): $res")})
+    timed({DayOne().solve_partTwo(inputs)}, { time, res -> println("Solution Part Two, List ($time ns): $res")})
 }

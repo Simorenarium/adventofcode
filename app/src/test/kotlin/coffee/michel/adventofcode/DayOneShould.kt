@@ -9,7 +9,7 @@ class DayOneShould {
 
     @Test
     fun `multiply the two entries which sum up to 2020`() {
-        val numbers = listOf(1721, 979, 366, 299, 675, 1456)
+        val numbers = setOf(1721, 979, 366, 299, 675, 1456)
 
         val result = dayOne.solve(numbers)
 
@@ -18,7 +18,7 @@ class DayOneShould {
 
     @Test
     fun `multiply the three entries which sum up to 2020`() {
-        val numbers = listOf(1721, 979, 366, 299, 675, 1456)
+        val numbers = setOf(1721, 979, 366, 299, 675, 1456)
 
         val result = dayOne.solve_partTwo(numbers)
 

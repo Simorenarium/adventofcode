@@ -36,7 +36,7 @@ class DayOne {
 
 }
 
-fun timed(solve: () -> Int, eval: (Long, Int) -> Unit) {
+fun <T> timed(solve: () -> T, eval: (Long, T) -> Unit) {
     val start = System.currentTimeMillis()
     val res = solve()
     val time = System.currentTimeMillis() - start
